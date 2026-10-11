@@ -41,7 +41,12 @@ a:focus-visible{outline:2px solid #0A0A0A;outline-offset:3px}
 .card{filter:drop-shadow(0 10px 18px rgba(10,10,10,.22)) drop-shadow(0 1px 2px rgba(10,10,10,.14))}
 .sheet .draw{position:absolute;top:8%;right:6%;bottom:8%;left:10%}
 .gauge{width:100px;height:400px}
-@media (max-width: 720px){.gauge{width:64px;height:220px}}
+@media (max-width: 720px){
+.gwrap{padding-right:0!important}
+.gfig{position:static!important;float:right;width:auto!important;margin:22px 0 10px 14px!important}
+.gauge{display:block;width:52px;height:208px}
+.gtext .log{clear:both}
+}
 
 /* hero */
 .hero{position:relative;overflow:hidden;isolation:isolate}
@@ -134,9 +139,21 @@ a:focus-visible{outline:2px solid #0A0A0A;outline-offset:3px}
 <span>PORTUGAL · LATE 1950s</span>
 </div>
 
-<div style="display: flex; flex-wrap: wrap-reverse; align-items: flex-end; gap: 32px 48px; margin-top: 32px">
-<div style="flex: 999 1 480px; min-width: 0; max-width: 680px">
+<div class="gwrap" style="position: relative; margin-top: 32px; padding-right: 148px">
+<div class="gtext" style="max-width: 680px">
 <h2 id="game-title" style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: clamp(48px, 9vw, 88px); line-height: .9; letter-spacing: .01em; text-transform: uppercase">Drawdown 391</h2>
+<figure class="gfig" data-fx="gauge" style="position: absolute; right: 0; bottom: 0; width: 100px; margin: 0">
+<svg class="gauge" viewBox="0 0 100 400" role="img" aria-label="Staff gauge with metre ticks, the 391 mark highlighted">
+<path d="M56 10V390" fill="none" stroke="#8B8F89" stroke-width="2"></path>
+<path d="M32 20h24M48 26h8M48 32h8M48 38h8M48 44h8M42 50h14M48 56h8M48 62h8M48 68h8M48 74h8M32 80h24M48 86h8M48 92h8M48 98h8M48 104h8M42 110h14M48 116h8M48 122h8M48 128h8M48 134h8M32 140h24M48 146h8M48 152h8M48 158h8M48 164h8M42 170h14M48 176h8M48 182h8M48 188h8M48 194h8M48 206h8M48 212h8M48 218h8M48 224h8M42 230h14M48 236h8M48 242h8M48 248h8M48 254h8M32 260h24M48 266h8M48 272h8M48 278h8M48 284h8M42 290h14M48 296h8M48 302h8M48 308h8M48 314h8M32 320h24M48 326h8M48 332h8M48 338h8M48 344h8M42 350h14M48 356h8M48 362h8M48 368h8M48 374h8M32 380h24" fill="none" stroke="#8B8F89" stroke-width="1.5"></path>
+<path d="M30 200H98" fill="none" stroke="#E6A23C" stroke-width="4"></path>
+<g font-family="IBM Plex Mono, monospace" font-size="11" fill="#8B8F89" text-anchor="end">
+<text x="28" y="24">394</text><text x="28" y="84">393</text><text x="28" y="144">392</text><text x="28" y="264">390</text><text x="28" y="324">389</text><text x="28" y="384">388</text>
+</g>
+<text x="26" y="204" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="500" fill="#0A0A0A" text-anchor="end">391</text>
+<path class="marker" d="M60 12L72 5V19Z" fill="#0A0A0A"></path>
+</svg>
+</figure>
 <p style="margin: 24px 0 0; font-weight: 700; font-size: 18px; line-height: 1.6">An ordinary job where the numbers stop making sense</p>
 <p style="margin: 16px 0 0; font-size: 17px; line-height: 1.75">A young technician covers for the senior watchman at a hydroelectric dam in the interior of Portugal, during a drought. He can't come in, so he talks her through the job by walkie. The job is a round of checks, repeated every night. The checks start to disagree with each other.</p>
 
@@ -149,19 +166,6 @@ a:focus-visible{outline:2px solid #0A0A0A;outline-offset:3px}
 <li style="--d: 6100ms; --n: 1; --t: 1ms; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; padding: 12px 0; font-size: 17px; line-height: 1.5; min-height: 50px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding-top: 2px; border-right: 1px solid #0A0A0A">--:--</span><span></span></li>
 </ol>
 </div>
-
-<figure class="gfig" data-fx="gauge" style="flex: 1 1 100px; margin: 0; display: flex; justify-content: flex-end">
-<svg class="gauge" viewBox="0 0 100 400" role="img" aria-label="Staff gauge with metre ticks, the 391 mark highlighted">
-<path d="M56 10V390" fill="none" stroke="#8B8F89" stroke-width="2"></path>
-<path d="M32 20h24M48 26h8M48 32h8M48 38h8M48 44h8M42 50h14M48 56h8M48 62h8M48 68h8M48 74h8M32 80h24M48 86h8M48 92h8M48 98h8M48 104h8M42 110h14M48 116h8M48 122h8M48 128h8M48 134h8M32 140h24M48 146h8M48 152h8M48 158h8M48 164h8M42 170h14M48 176h8M48 182h8M48 188h8M48 194h8M48 206h8M48 212h8M48 218h8M48 224h8M42 230h14M48 236h8M48 242h8M48 248h8M48 254h8M32 260h24M48 266h8M48 272h8M48 278h8M48 284h8M42 290h14M48 296h8M48 302h8M48 308h8M48 314h8M32 320h24M48 326h8M48 332h8M48 338h8M48 344h8M42 350h14M48 356h8M48 362h8M48 368h8M48 374h8M32 380h24" fill="none" stroke="#8B8F89" stroke-width="1.5"></path>
-<path d="M30 200H98" fill="none" stroke="#E6A23C" stroke-width="4"></path>
-<g font-family="IBM Plex Mono, monospace" font-size="11" fill="#8B8F89" text-anchor="end">
-<text x="28" y="24">394</text><text x="28" y="84">393</text><text x="28" y="144">392</text><text x="28" y="264">390</text><text x="28" y="324">389</text><text x="28" y="384">388</text>
-</g>
-<text x="26" y="204" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="500" fill="#0A0A0A" text-anchor="end">391</text>
-<path class="marker" d="M60 12L72 5V19Z" fill="#0A0A0A"></path>
-</svg>
-</figure>
 </div>
 
 <p style="margin: 32px 0 0; padding: 10px 0; border-top: 1px solid #0A0A0A; border-bottom: 1px solid #0A0A0A; font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 12px; line-height: 1.8; letter-spacing: .14em; text-transform: uppercase">FIRST PERSON · ONE PLACE · NO WEAPONS · A VOICE ON THE WALKIE · LOW-POLY</p>
