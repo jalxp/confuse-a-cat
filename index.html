@@ -49,13 +49,20 @@ a:focus-visible{outline:2px solid #0A0A0A;outline-offset:3px}
 }
 
 /* hero */
-.hero{position:relative;overflow:hidden;isolation:isolate}
+.hero{position:relative;overflow:hidden;isolation:isolate;min-height:100vh;min-height:100svh}
+.nudge{display:flex;flex-direction:column;align-items:center;gap:10px;margin:28px auto 22px;padding:6px 12px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#8B8F89;text-decoration:none;position:relative;z-index:4}
+.nudge:hover{color:#ECE4D2}
+.nudge:focus-visible{outline:2px solid #ECE4D2;outline-offset:3px}
+.nudge-line{position:relative;display:block;width:1px;height:36px;background:rgba(236,228,210,.22);overflow:hidden}
+.nudge-line::after{content:"";position:absolute;left:0;top:0;width:1px;height:14px;background:#ECE4D2}
+@media (max-height: 700px){.mark{width:min(340px,72%,28vh)}.hero h1{font-size:clamp(38px,9vw,72px)!important}.hero .intro{margin-top:20px!important;font-size:16px!important}.nudge{margin:16px auto 12px;gap:6px}.nudge-line{height:24px}}
+@keyframes nudge{0%{transform:translateY(-14px)}70%,100%{transform:translateY(36px)}}
 .fxl{position:absolute;pointer-events:none;z-index:3}
 .h-vig{inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(0,0,0,0) 52%,rgba(0,0,0,.6) 100%)}
 .h-grain{inset:-50%;background-image:url(assets/grain-light.png);background-size:256px 256px;opacity:.06}
 .h-roll{left:0;right:0;top:-80px;height:64px;background:rgba(236,228,210,.03);border-top:1px solid rgba(236,228,210,.07);border-bottom:1px solid rgba(236,228,210,.04);backdrop-filter:blur(1.5px);-webkit-backdrop-filter:blur(1.5px)}
 .h-light{top:0;bottom:0;left:-35%;width:35%;background:linear-gradient(90deg,rgba(236,228,210,0),rgba(236,228,210,.07),rgba(236,228,210,0))}
-.mark{position:relative;isolation:isolate;width:min(340px,72%)}
+.mark{position:relative;isolation:isolate;width:min(340px,72%,38vh)}
 .mark img{position:relative;display:block;width:100%;height:auto}
 .ghost{position:absolute;inset:0;-webkit-mask:url(assets/cac-mark.png) center/100% 100% no-repeat;mask:url(assets/cac-mark.png) center/100% 100% no-repeat;opacity:.6;z-index:-1}
 .ghost.r{background:#D2452F;translate:-2px 0}
@@ -86,6 +93,8 @@ a:focus-visible{outline:2px solid #0A0A0A;outline-offset:3px}
 .ghost.c,.split::after{animation:drift-c 11s ease-in-out infinite,spike 7s steps(1,end) .03s infinite}
 .mark,.split{animation:jitter 7s steps(1,end) infinite}
 .h-grain{animation:grain .5s steps(1,end) infinite}
+.nudge-line::after{animation:nudge 2.2s cubic-bezier(.5,0,.5,1) infinite}
+html{scroll-behavior:smooth}
 
 .fx .log li>span{opacity:0}
 .fx .log.in li>span:first-child{opacity:1;animation:appear 1ms linear var(--d) backwards}
@@ -110,8 +119,8 @@ a:focus-visible{outline:2px solid #0A0A0A;outline-offset:3px}
 <main  style="font-family: 'Courier Prime', 'Courier New', monospace; color: #0A0A0A; background: #0A0A0A">
 
 <!-- 1. HERO -->
-<header class="hero" style="background: #0A0A0A; color: #ECE4D2; padding: clamp(56px, 9vw, 104px) 16px 0; border-bottom: 1px solid #ECE4D2">
-<div style="max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center">
+<header class="hero" style="background: #0A0A0A; color: #ECE4D2; padding: clamp(32px, 6vh, 88px) 16px 0; border-bottom: 1px solid #ECE4D2; display: flex; flex-direction: column">
+<div style="flex: 1 0 auto; width: 100%; max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center">
 <div class="mark">
 <span class="ghost r" aria-hidden="true"></span>
 <span class="ghost c" aria-hidden="true"></span>
@@ -119,12 +128,13 @@ a:focus-visible{outline:2px solid #0A0A0A;outline-offset:3px}
 </div>
 <h1 class="split" data-text="Confuse a Cat" style="margin: 4px 0 0; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: clamp(44px, 10vw, 96px); line-height: .9; letter-spacing: .06em; text-transform: uppercase; color: #ECE4D2">Confuse a Cat</h1>
 <p style="margin: 10px 0 0; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: clamp(18px, 3vw, 26px); letter-spacing: .5em; padding-left: .5em; text-transform: uppercase; color: #ECE4D2">Games</p>
-<div style="margin-top: 36px; display: flex; flex-direction: column; gap: 4px; font-size: 18px; line-height: 1.6">
+<div class="intro" style="margin-top: 36px; display: flex; flex-direction: column; gap: 4px; font-size: 18px; line-height: 1.6">
 <p style="margin: 0">Indie dev studio. Making small strange games.</p>
 <p style="margin: 0">Here to confuse at least one cat.</p>
 </div>
 </div>
-<div style="max-width: 860px; margin: clamp(56px, 9vw, 96px) auto 0; padding: 16px 0 20px; border-top: 1px solid #8B8F89">
+<a class="nudge" href="#night-log" aria-label="Scroll down to the night log"><span>Scroll</span><span class="nudge-line" aria-hidden="true"></span></a>
+<div style="width: 100%; max-width: 860px; margin: 0 auto; padding: 16px 0 20px; border-top: 1px solid #8B8F89">
 <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #ECE4D2">EST. 2026 · ONE PERSON · NOTHING RELEASED YET<span class="cursor" aria-hidden="true"></span></p>
 </div>
 <div class="fxl h-vig" aria-hidden="true"></div>
@@ -132,7 +142,7 @@ a:focus-visible{outline:2px solid #0A0A0A;outline-offset:3px}
 </header>
 
 <!-- 2. NOW IN DEVELOPMENT -->
-<section class="paper" aria-labelledby="game-title" style="background: #ECE4D2; padding: clamp(48px, 8vw, 88px) 16px; border-bottom: 1px solid #0A0A0A">
+<section id="night-log" class="paper" aria-labelledby="game-title" style="background: #ECE4D2; padding: clamp(48px, 8vw, 88px) 16px; border-bottom: 1px solid #0A0A0A">
 <div style="max-width: 860px; margin: 0 auto">
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 24px; padding: 10px 0; border-top: 1px solid #0A0A0A; border-bottom: 2px solid #E6A23C; font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 12px; letter-spacing: .14em; text-transform: uppercase">
 <span>NIGHT LOG · ENTRY 01 · IN DEVELOPMENT</span>
@@ -288,6 +298,10 @@ a:focus-visible{outline:2px solid #0A0A0A;outline-offset:3px}
 </div>
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; min-height: 60px; padding: 18px 0; border-bottom: 1px solid #0A0A0A">
 <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 12px; letter-spacing: .14em; text-transform: uppercase">Press &amp; Contact</span>
+<span style="font-size: 17px">soon</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; min-height: 60px; padding: 18px 0; border-bottom: 1px solid #0A0A0A">
+<span style="font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 12px; letter-spacing: .14em; text-transform: uppercase">Steam</span>
 <span style="font-size: 17px">soon</span>
 </div>
 </div>
