@@ -94,9 +94,8 @@ a:focus-visible{outline:2px solid #0A0A0A;outline-offset:3px}
 @keyframes rise{from{translate:0 372px}to{translate:0 0}}
 
 @media (prefers-reduced-motion: no-preference){
-.ghost.r,.split::before{animation:drift-r 9s ease-in-out infinite,spike 7s steps(1,end) infinite}
-.ghost.c,.split::after{animation:drift-c 11s ease-in-out infinite,spike 7s steps(1,end) .03s infinite}
-.mark,.split{animation:jitter 7s steps(1,end) infinite}
+.ghost.r,.split::before{animation:drift-r 9s ease-in-out infinite}
+.ghost.c,.split::after{animation:drift-c 11s ease-in-out infinite}
 .h-grain{animation:grain .5s steps(1,end) infinite}
 .nudge-line::after{animation:nudge 2.2s cubic-bezier(.5,0,.5,1) infinite}
 html{scroll-behavior:smooth}
