@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&amp;family=Courier+Prime:wght@400;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&amp;family=Courier+Prime:ital,wght@0,400;0,700;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
 <style>
 body{margin:0;background:#0A0A0A}
 *{box-sizing:border-box}
@@ -40,16 +40,22 @@ a:focus-visible{outline:2px solid #0A0A0A;outline-offset:3px}
 .sheet .hole{position:absolute;left:3%;width:9px;height:9px;border-radius:50%;background:#ECE4D2;box-shadow:inset 0 1px 2px rgba(10,10,10,.25)}
 .card{filter:drop-shadow(0 10px 18px rgba(10,10,10,.22)) drop-shadow(0 1px 2px rgba(10,10,10,.14))}
 .sheet .draw{position:absolute;top:8%;right:6%;bottom:8%;left:10%}
+.logsheet{box-shadow:0 12px 30px rgba(10,10,10,.2),0 1px 3px rgba(10,10,10,.12)}
+.lrow{display:grid;grid-template-columns:56px 76px minmax(0,1fr);border-bottom:1px solid rgba(10,10,10,.28)}
+.lrow>span{padding:9px 10px 8px;border-right:1px solid rgba(10,10,10,.28)}
+.lrow>span:last-child{border-right:0}
+.lrow>span:first-child{padding-left:0}
+@media (max-width: 560px){.lrow{grid-template-columns:46px 60px minmax(0,1fr)}.lrow>span{padding:8px 6px 7px}.logsheet{font-size:13px!important;padding:16px 14px 18px!important}}
 .gauge{width:100px;height:400px}
 @media (max-width: 720px){
 .gwrap{padding-right:0!important}
 .gfig{position:static!important;float:right;width:auto!important;margin:22px 0 10px 14px!important}
 .gauge{display:block;width:52px;height:208px}
-.gtext .log{clear:both}
+.gtext .logsheet{clear:both}
 }
 
 /* hero */
-.hero{position:relative;overflow:hidden;isolation:isolate;min-height:100vh;min-height:100svh}
+.hero{position:relative;overflow:hidden;isolation:isolate;min-height:calc(100vh + 4px);min-height:calc(100dvh + 4px)}
 .nudge{display:flex;flex-direction:column;align-items:center;gap:10px;margin:28px auto 22px;padding:6px 12px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#8B8F89;text-decoration:none;position:relative;z-index:4}
 .nudge:hover{color:#ECE4D2}
 .nudge:focus-visible{outline:2px solid #ECE4D2;outline-offset:3px}
@@ -97,7 +103,7 @@ a:focus-visible{outline:2px solid #0A0A0A;outline-offset:3px}
 html{scroll-behavior:smooth}
 
 .fx .log li>span{opacity:0}
-.fx .log.in li>span:first-child{opacity:1;animation:appear 1ms linear var(--d) backwards}
+.fx .log.in li>span{opacity:1;animation:appear 1ms linear var(--d) backwards}
 .fx .log.in li>span:last-child{opacity:1;animation:appear 1ms linear calc(var(--d) + 180ms) backwards,type var(--t,1.1s) steps(var(--n,30),end) calc(var(--d) + 180ms) backwards}
 
 .fx .draws .sheet{opacity:0}
@@ -167,14 +173,30 @@ html{scroll-behavior:smooth}
 <p style="margin: 24px 0 0; font-weight: 700; font-size: 18px; line-height: 1.6">An ordinary job where the numbers stop making sense</p>
 <p style="margin: 16px 0 0; font-size: 17px; line-height: 1.75">A young technician covers for the senior watchman at a hydroelectric dam in the interior of Portugal, during a drought. He can't come in, so he talks her through the job by walkie. The job is a round of checks, repeated every night. The checks start to disagree with each other.</p>
 
-<ol class="log" data-fx="log" aria-label="Night round log" style="list-style: none; margin: 32px 0 0; padding: 0">
-<li style="--d: 0ms; --n: 32; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid #0A0A0A; font-size: 17px; line-height: 1.5"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding-top: 2px; border-right: 1px solid #0A0A0A">22:00</span><span>Round start at the control post. Walkie checked, signal clear</span></li>
-<li style="--d: 1400ms; --n: 30; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid #0A0A0A; font-size: 17px; line-height: 1.5"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding-top: 2px; border-right: 1px solid #0A0A0A">22:36</span><span>Crest walk. Level read at the upstream gauge: 406.42</span></li>
-<li style="--d: 2800ms; --n: 28; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid #0A0A0A; font-size: 17px; line-height: 1.5"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding-top: 2px; border-right: 1px solid #0A0A0A">23:40</span><span>Lower gallery. Drainage normal. Lamp 3 out, replaced</span></li>
-<li style="--d: 4200ms; --n: 36; --t: 1.5s; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid #0A0A0A; font-size: 17px; line-height: 1.5"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding-top: 2px; border-right: 1px solid #0A0A0A">01:15</span><span>Manual reading at the staff gauge: 403.38. Panel recorder shows 406.45. Read again. Same</span></li>
-<li style="--d: 6000ms; --n: 1; --t: 1ms; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid #0A0A0A; font-size: 17px; line-height: 1.5; min-height: 50px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding-top: 2px; border-right: 1px solid #0A0A0A">--:--</span><span><span class="cursor ink" aria-hidden="true"></span></span></li>
-<li style="--d: 6100ms; --n: 1; --t: 1ms; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; padding: 12px 0; font-size: 17px; line-height: 1.5; min-height: 50px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding-top: 2px; border-right: 1px solid #0A0A0A">--:--</span><span></span></li>
+<div class="logsheet" style="margin-top: 40px; max-width: 680px; background: #F7F3EA; padding: clamp(18px, 4vw, 32px); font-size: 15px; transform: rotate(-.6deg)">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 11px; letter-spacing: .16em; text-transform: uppercase">
+<span>Livro de ocorrências</span>
+<span>Fl. 01</span>
+</div>
+<p style="margin: 4px 0 0; font-style: italic; font-size: 14px">Registo de ronda nocturna</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 16px; border: 1px solid #0A0A0A">
+<div style="padding: 6px 8px 8px; border-right: 1px solid #0A0A0A"><div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: .14em; text-transform: uppercase">Data</div><div style="margin-top: 4px">—.—.—</div></div>
+<div style="padding: 6px 8px 8px; border-right: 1px solid #0A0A0A"><div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: .14em; text-transform: uppercase">Turno</div><div style="margin-top: 4px">3.º · 22h–06h</div></div>
+<div style="padding: 6px 8px 8px"><div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: .14em; text-transform: uppercase">Vigilante</div><div style="margin-top: 4px">substituto</div></div>
+</div>
+<div class="lrow" aria-hidden="true" style="margin-top: 18px; border-bottom: 1.5px solid #0A0A0A; font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 9px; letter-spacing: .14em; text-transform: uppercase"><span>Hora</span><span>Posto</span><span>Ocorrência</span></div>
+<ol class="log" data-fx="log" aria-label="Night round log" style="list-style: none; margin: 0; padding: 0; line-height: 1.45">
+<li class="lrow" style="--d: 0ms; --n: 26"><span>22:00</span><span>Ctrl.</span><span>Shift start. Walkie check with the senior watchman: clear.</span></li>
+<li class="lrow" style="--d: 1200ms; --n: 24"><span>22:14</span><span>E1</span><span>Control room. Card punched. Generator 2 still idle.</span></li>
+<li class="lrow" style="--d: 2400ms; --n: 28"><span>22:41</span><span>Coroa.</span><span>Crest walk. Upstream gauge at 406.4. Wind from the east, 6 knots.</span></li>
+<li class="lrow" style="--d: 3600ms; --n: 26"><span>23:30</span><span>E3</span><span>Inspection gallery. Drainage normal. Lamp 3 out, replaced.</span></li>
+<li class="lrow" style="--d: 4800ms; --n: 34; --t: 1.4s"><span>01:15</span><span>Escala</span><span>Manual staff gauge reading: 406.4. Panel registers 402.4. Inconsistency reproduced on second reading.</span></li>
+<li class="lrow" style="--d: 6500ms; --n: 30; --t: 1.3s"><span>01:22</span><span>Ctrl.</span><span>Reported to the senior watchman. He says the recorder runs high.</span></li>
+<li class="lrow" style="--d: 8000ms; --n: 1; --t: 1ms; min-height: 40px"><span>&#8203;</span><span></span><span></span></li>
+<li class="lrow" style="--d: 8000ms; --n: 1; --t: 1ms; min-height: 40px"><span>&#8203;</span><span></span><span></span></li>
+<li class="lrow" style="--d: 8000ms; --n: 1; --t: 1ms; min-height: 40px; border-bottom: 0"><span>&#8203;</span><span></span><span></span></li>
 </ol>
+</div>
 </div>
 </div>
 
@@ -297,11 +319,11 @@ html{scroll-behavior:smooth}
 <span style="font-size: 17px">soon</span>
 </div>
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; min-height: 60px; padding: 18px 0; border-bottom: 1px solid #0A0A0A">
-<span style="font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 12px; letter-spacing: .14em; text-transform: uppercase">Press &amp; Contact</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 12px; letter-spacing: .14em; text-transform: uppercase">Steam</span>
 <span style="font-size: 17px">soon</span>
 </div>
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; min-height: 60px; padding: 18px 0; border-bottom: 1px solid #0A0A0A">
-<span style="font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 12px; letter-spacing: .14em; text-transform: uppercase">Steam</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 12px; letter-spacing: .14em; text-transform: uppercase">Press &amp; Contact</span>
 <span style="font-size: 17px">soon</span>
 </div>
 </div>
@@ -311,7 +333,7 @@ html{scroll-behavior:smooth}
 <!-- 5. FOOTER -->
 <footer style="background: #0A0A0A; color: #ECE4D2; padding: 40px 16px 48px; border-top: 1px solid #0A0A0A">
 <div style="max-width: 860px; margin: 0 auto; padding-top: 20px; border-top: 1px solid #5E6E78; display: flex; flex-direction: column; gap: 14px">
-<p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 12px; line-height: 1.8; letter-spacing: .14em; text-transform: uppercase; color: #ECE4D2">LAST ENTRY 2026-10-11 · LEVEL --.- · NOTHING TO REPORT<span class="cursor" aria-hidden="true"></span></p>
+<p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 12px; line-height: 1.8; letter-spacing: .14em; text-transform: uppercase; color: #ECE4D2">LAST ENTRY 2026-10-11 · NOTHING TO REPORT<span class="cursor" aria-hidden="true"></span></p>
 <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .1em; color: #8B8F89">© 2026 Confuse a Cat Games</p>
 </div>
 </footer>
