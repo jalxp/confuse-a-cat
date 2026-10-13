@@ -54,20 +54,20 @@ a:focus-visible{outline:2px solid #0A0A0A;outline-offset:3px}
 }
 
 /* hero */
-.hero{position:relative;overflow:hidden;isolation:isolate;min-height:calc(100vh + 4px);min-height:calc(100dvh + 4px)}
+.hero{position:relative;overflow:hidden;isolation:isolate;min-height:calc(100vh + 4px);min-height:calc(100svh + 4px);min-height:calc(var(--hero-h, 100svh) + 4px)}
 .nudge{display:flex;flex-direction:column;align-items:center;gap:10px;margin:28px auto 22px;padding:6px 12px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#8E8984;text-decoration:none;position:relative;z-index:4}
 .nudge:hover{color:#ECE4D2}
 .nudge:focus-visible{outline:2px solid #ECE4D2;outline-offset:3px}
 .nudge-line{position:relative;display:block;width:1px;height:36px;background:rgba(236,228,210,.22);overflow:hidden}
 .nudge-line::after{content:"";position:absolute;left:0;top:0;width:1px;height:14px;background:#ECE4D2}
-@media (max-height: 700px){.mark{width:min(340px,72%,28vh)}.hero h1{font-size:clamp(38px,9vw,72px)!important}.hero .intro{margin-top:20px!important;font-size:16px!important}.nudge{margin:16px auto 12px;gap:6px}.nudge-line{height:24px}}
+:root.short .mark{width:min(340px,72%,calc(var(--hero-h,100svh)*.28))}:root.short .hero h1{font-size:clamp(38px,9vw,72px)!important}:root.short .hero .intro{margin-top:20px!important;font-size:16px!important}:root.short .nudge{margin:16px auto 12px;gap:6px}:root.short .nudge-line{height:24px}
 @keyframes nudge{0%{transform:translateY(-14px)}70%,100%{transform:translateY(36px)}}
 .fxl{position:absolute;pointer-events:none;z-index:3}
 .h-vig{inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(0,0,0,0) 52%,rgba(0,0,0,.6) 100%)}
 .h-grain{inset:-50%;background-image:url(assets/grain-light.png);background-size:256px 256px;opacity:.06}
 .h-roll{left:0;right:0;top:-80px;height:64px;background:rgba(236,228,210,.03);border-top:1px solid rgba(236,228,210,.07);border-bottom:1px solid rgba(236,228,210,.04);backdrop-filter:blur(1.5px);-webkit-backdrop-filter:blur(1.5px)}
 .h-light{top:0;bottom:0;left:-35%;width:35%;background:linear-gradient(90deg,rgba(236,228,210,0),rgba(236,228,210,.07),rgba(236,228,210,0))}
-.mark{position:relative;isolation:isolate;width:min(340px,72%,38vh)}
+.mark{position:relative;isolation:isolate;width:min(340px,72%,calc(var(--hero-h,100svh)*.38))}
 .mark img{position:relative;display:block;width:100%;height:auto}
 .ghost{position:absolute;inset:0;-webkit-mask:url(assets/cac-mark.png) center/100% 100% no-repeat;mask:url(assets/cac-mark.png) center/100% 100% no-repeat;opacity:.6;z-index:-1}
 .ghost.r{background:#D2452F;translate:-2px 0}
@@ -119,12 +119,14 @@ html{scroll-behavior:smooth}
 .fx .gfig.in .marker{opacity:1;animation:rise 1.8s cubic-bezier(.3,.7,.2,1) .3s backwards}
 }
 </style>
+
+<script>(function(){var r=document.documentElement,w=0;function l(){var n=window.innerWidth;if(n===w)return;w=n;r.style.setProperty('--hero-h',window.innerHeight+'px');r.classList.toggle('short',window.innerHeight<=700)}l();addEventListener('resize',l);addEventListener('orientationchange',function(){w=0;setTimeout(l,250)})})();</script>
 </head>
 <body>
 <main  style="font-family: 'Courier Prime', 'Courier New', monospace; color: #0A0A0A; background: #0A0A0A">
 
 <!-- 1. HERO -->
-<header class="hero" style="background: #0A0A0A; color: #ECE4D2; padding: clamp(32px, 6vh, 88px) 16px 0; border-bottom: 1px solid #ECE4D2; display: flex; flex-direction: column">
+<header class="hero" style="background: #0A0A0A; color: #ECE4D2; padding: clamp(32px, calc(var(--hero-h, 100svh) * .06), 88px) 16px 0; border-bottom: 1px solid #ECE4D2; display: flex; flex-direction: column">
 <div style="flex: 1 0 auto; width: 100%; max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center">
 <div class="mark">
 <span class="ghost r" aria-hidden="true"></span>
@@ -345,17 +347,6 @@ html{scroll-behavior:smooth}
 </footer>
 
 </main>
-<script>
-(function(){
-  var reduce=false;
-  try{reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
-  if(reduce||!('IntersectionObserver' in window))return;
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){
-    if(!e.isIntersecting)return;e.target.classList.add('in');io.unobserve(e.target);
-  })},{threshold:0.3});
-  document.querySelectorAll('[data-fx]').forEach(function(el){io.observe(el)});
-  document.querySelector('main').classList.add('fx');
-})();
-</script>
+<script>(function(){var r=document.documentElement,w=0;function l(){var n=window.innerWidth;if(n===w)return;w=n;r.style.setProperty('--hero-h',window.innerHeight+'px')}l();addEventListener('resize',l);addEventListener('orientationchange',function(){w=0;setTimeout(l,250)})})();</script>
 </body>
 </html>
