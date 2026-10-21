@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YouTube banner and watermark</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+body{margin:0;padding:32px 16px;background:#1b1b1b;color:#ECE4D2;font-family:'IBM Plex Mono',monospace;font-size:13px}
+.wrap{max-width:1100px;margin:0 auto}
+canvas{display:block;background-image:linear-gradient(45deg,#222 25%,transparent 25%),linear-gradient(-45deg,#222 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#222 75%),linear-gradient(-45deg,transparent 75%,#222 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0}
+#banner{width:100%;height:auto}
+.row{display:flex;gap:24px;align-items:flex-start;margin:16px 0}
+.bar{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin:16px 0}
+label{display:flex;gap:6px;align-items:center}
+a.btn,button{background:#E6A23C;color:#0A0A0A;border:0;padding:10px 16px;font:inherit;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;cursor:pointer}
+p{color:#8E8984;max-width:70ch}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h3 style="font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin:0 0 12px">Channel banner, 2048 × 1152</h3>
+<canvas id="banner"></canvas>
+<div class="bar">
+<label><input id="safe" type="checkbox"> Show YouTube's safe area (1235 × 338, the part every device shows)</label>
+<label><input id="ghost" type="checkbox" checked> Colour fringe</label>
+<button id="go">Redraw</button>
+<a id="dl" class="btn" download="youtube-banner-2048x1152.png" href="#">Download banner</a>
+</div>
+<p>TV shows the whole image, desktop the middle band, phones only the safe area. Everything that must be read sits inside the safe area; the rest is ink and grain, as on the Reddit and itch banners.</p>
+<h3 style="font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin:32px 0 12px">Video watermark, 150 × 150, transparent</h3>
+<div class="row">
+<div><canvas id="wm-paper" width="150" height="150"></canvas><p>A. Paper silhouette</p><a class="btn dlwm" data-c="wm-paper" download="youtube-watermark-150-paper.png" href="#">Download A</a></div>
+<div><canvas id="wm-grey" width="150" height="150"></canvas><p>B. The grey tabby as it is</p><a class="btn dlwm" data-c="wm-grey" download="youtube-watermark-150-grey.png" href="#">Download B</a></div>
+<div><canvas id="wm-orange" width="150" height="150"></canvas><p>C. Sodium orange silhouette</p><a class="btn dlwm" data-c="wm-orange" download="youtube-watermark-150-orange.png" href="#">Download C</a></div>
+</div>
+<p>YouTube draws the watermark small in the bottom-right corner of long videos only (never on Shorts), and turns it into a Subscribe button on hover. A flat silhouette survives the shrink; the tabby's stripes do not.</p>
+<div id="done" hidden></div>
+</div>
+<script>
+const cat=new Image();cat.src='../cac-mark.png';
+const grain=new Image();grain.src='../grain-light.png';
+function tinted(img,color,w,h){const o=document.createElement('canvas');o.width=w;o.height=h;const g=o.getContext('2d');g.drawImage(img,0,0,w,h);g.globalCompositeOperation='source-in';g.fillStyle=color;g.fillRect(0,0,w,h);return o}
+function spaced(x,text,px,y,spacing,align){x.textBaseline='alphabetic';const chars=[...text];const widths=chars.map(ch=>x.measureText(ch).width);const total=widths.reduce((a,b)=>a+b,0)+spacing*(chars.length-1);let cx=align==='center'?px-total/2:px;chars.forEach((ch,i)=>{x.fillText(ch,cx,y);cx+=widths[i]+spacing});return total}
+function drawBanner(){
+ const c=document.getElementById('banner'),x=c.getContext('2d');
+ const W=2048,H=1152;c.width=W;c.height=H;
+ x.fillStyle='#0A0A0A';x.fillRect(0,0,W,H);
+ // grain as on the site's hero: grain-light at 6 %, tiled at 256
+ x.globalAlpha=.06;for(let gy=0;gy<H;gy+=256)for(let gx=0;gx<W;gx+=256)x.drawImage(grain,gx,gy,256,256);x.globalAlpha=1;
+ const SW=1235,SH=338,sx=(W-SW)/2,sy=(H-SH)/2;
+ const ghost=document.getElementById('ghost').checked;
+ // the group: cat left, wordmark right, centred in the safe area
+ const ch=SH*0.74,cw=cat.width*ch/cat.height;
+ let fs=Math.round(SH*0.30);x.font=`700 ${fs}px "Barlow Condensed"`;
+ const sp=fs*.06,measure=t=>[...t].reduce((a,ch)=>a+x.measureText(ch).width,0)+sp*(t.length-1);
+ const tw=measure('CONFUSE A CAT'),gap=SW*0.06,total=cw+gap+tw;
+ const catX=sx+(SW-total)/2,catY=sy+(SH-ch)/2+SH*0.02,tx=catX+cw+gap;
+ const off=3;
+ if(ghost){x.globalAlpha=.6;x.drawImage(tinted(cat,'#D2452F',cat.width,cat.height),catX-off,catY,cw,ch);x.drawImage(tinted(cat,'#5FB3C7',cat.width,cat.height),catX+off,catY+1,cw,ch);x.globalAlpha=1}
+ x.drawImage(cat,catX,catY,cw,ch);
+ const titleY=sy+SH*0.5+fs*0.28;
+ if(ghost){x.globalAlpha=.6;x.fillStyle='#D2452F';spaced(x,'CONFUSE A CAT',tx-off,titleY,sp);x.fillStyle='#5FB3C7';spaced(x,'CONFUSE A CAT',tx+off,titleY+1,sp);x.globalAlpha=1}
+ x.fillStyle='#ECE4D2';spaced(x,'CONFUSE A CAT',tx,titleY,sp);
+ const gs=fs*0.30;x.font=`600 ${gs}px "Barlow Condensed"`;x.fillStyle='#8E8984';spaced(x,'GAMES',tx+2,titleY+gs*1.45,gs*.5);
+ if(document.getElementById('safe').checked){x.strokeStyle='#E6A23C';x.lineWidth=2;x.setLineDash([12,10]);x.strokeRect(sx,sy,SW,SH);x.setLineDash([]);x.font='500 22px "IBM Plex Mono"';x.fillStyle='#E6A23C';x.fillText('SAFE AREA 1235 × 338',sx,sy-14)}
+ c.toBlob(b=>{const a=document.getElementById('dl');if(a.dataset.u)URL.revokeObjectURL(a.dataset.u);a.dataset.u=URL.createObjectURL(b);a.href=a.dataset.u});
+}
+function drawWatermark(id,color){
+ const c=document.getElementById(id),x=c.getContext('2d');x.clearRect(0,0,150,150);
+ const pad=8,h=150-pad*2,w=cat.width*h/cat.height,px=(150-w)/2,py=pad;
+ if(color)x.drawImage(tinted(cat,color,cat.width,cat.height),px,py,w,h);else x.drawImage(cat,px,py,w,h);
+ c.toBlob(b=>{const a=document.querySelector(`a[data-c="${id}"]`);if(a.dataset.u)URL.revokeObjectURL(a.dataset.u);a.dataset.u=URL.createObjectURL(b);a.href=a.dataset.u});
+}
+function draw(){drawBanner();drawWatermark('wm-paper','#ECE4D2');drawWatermark('wm-grey',null);drawWatermark('wm-orange','#E6A23C');document.getElementById('done').hidden=false}
+document.getElementById('go').onclick=draw;['safe','ghost'].forEach(id=>document.getElementById(id).onchange=draw);
+const loaded=img=>new Promise(r=>img.complete&&img.naturalWidth?r():img.onload=r);
+Promise.all([document.fonts.load('700 100px "Barlow Condensed"'),document.fonts.load('600 40px "Barlow Condensed"'),document.fonts.load('500 22px "IBM Plex Mono"'),loaded(cat),loaded(grain)]).then(draw);
+</script>
+</body>
+</html>
